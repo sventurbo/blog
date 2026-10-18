@@ -1,0 +1,38 @@
+baseURL = 'https://svenfrank.eu/'
+locale = 'en-us'
+title = 'Sven Frank'
+theme = 'PaperMod'
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  author = 'Sven Frank'
+  description = 'Personal blog of Sven Frank'
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowCodeCopyButtons = true
+  ShowPostNavLinks = true
+
+  [params.homeInfoParams]
+    Title = 'Hi, I am Sven 👋'
+    Content = 'Welcome to my blog.'
+
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/sventurbo'
+
+[menu]
+  [[menu.main]]
+    name = 'Posts'
+    url = '/posts/'
+    weight = 10
+  [[menu.main]]
+    name = 'Tags'
+    url = '/tags/'
+    weight = 20
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
