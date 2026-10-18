@@ -16,6 +16,9 @@ enableRobotsTXT = true
   ShowCodeCopyButtons = true
   ShowPostNavLinks = true
 
+  # Cloudflare Web Analytics site token (public, from the JS snippet). Empty = disabled.
+  cloudflareAnalyticsToken = '2f22a98279484b29aa1e9259acb6c20f'
+
   [params.homeInfoParams]
     Title = 'Hi, I am Sven 👋'
     Content = 'Welcome to my blog.'
