@@ -1,6 +1,6 @@
 baseURL = 'https://svenfrank.eu/'
 locale = 'en-us'
-title = 'Sven Frank'
+title = 'Sven Oliver Frank'
 theme = 'PaperMod'
 enableRobotsTXT = true
 
@@ -8,8 +8,8 @@ enableRobotsTXT = true
   pagerSize = 10
 
 [params]
-  author = 'Sven Frank'
-  description = 'Personal blog of Sven Frank'
+  author = 'Sven Oliver Frank'
+  description = 'Personal blog of Sven Oliver Frank'
   defaultTheme = 'auto'
   ShowReadingTime = true
   ShowShareButtons = false
@@ -20,8 +20,8 @@ enableRobotsTXT = true
   cloudflareAnalyticsToken = '2f22a98279484b29aa1e9259acb6c20f'
 
   [params.homeInfoParams]
-    Title = 'Hi, I am Sven 👋'
-    Content = 'Welcome to my blog.'
+    Title = 'Hi, I am Sven Oliver'
+    Content = 'I am studying Business Informatics (E-Government) at DHBW Mannheim and sometimes write about tech in this blog.'
 
   [[params.socialIcons]]
     name = 'github'
