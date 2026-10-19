@@ -1,0 +1,33 @@
+{{- /* Head custom content area start */ -}}
+{{- /*     Insert any custom code (web-analytics, resources, etc.) - it will appear in the <head></head> section of every page. */ -}}
+{{- /*     Can be overwritten by partial with the same name in the global layouts. */ -}}
+
+{{- /* SVG favicon (modern browsers prefer SVG over ICO/PNG) */ -}}
+<link rel="icon" type="image/svg+xml" href="{{ "/favicon.svg" | relURL }}">
+
+{{- /* RSS badge styling */ -}}
+<style>
+.rss-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.4rem;
+    min-height: inherit;
+    text-decoration: none;
+    color: var(--secondary);
+    border-radius: 6px;
+}
+.rss-badge svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+.rss-badge:hover,
+.rss-badge:focus-visible {
+    color: var(--primary);
+    outline: none;
+}
+</style>
+
+{{- /* Head custom content area end */ -}}
