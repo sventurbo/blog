@@ -9,6 +9,15 @@ My Ibiza has an aftermarket head unit with wireless CarPlay and Android Auto. It
 
 This is a write-up of what I did, what I checked, what I *didn't* check, and how to get back to the original if something goes wrong. I've been running the updated image on the radio for four days now — more on that below.
 
+## The car and the radio
+
+| | |
+|---|---|
+| Car | SEAT Ibiza 6J SC FR 2.0 TDI, 2011 |
+| Radio | HQD / radio4car H-7033, aftermarket unit with CarPlay and Android Auto |
+| Display | HannStar `HSD080IFW1`, 8-inch, 1024×600, LVDS |
+| Platform | Sunplus "Gemini 8268", eCos, U-Boot 2014.04, 16 MiB SPI-NOR flash |
+
 ## TL;DR
 
 - The update package `H-M-7033-251203` passes the compatibility checks: same `H-M-7033` prefix, newer date than what's installed, and the archive contents match my unit (`UIN01`, 8-inch `HSD080IFW1` display).
@@ -24,9 +33,19 @@ Following radio4car's compatibility rule:
 - `251203` (December 2025) is newer than `250312` (March 2025), so it's an update, not a downgrade.
 - The archive folder is `西亚特7033` ("SEAT 7033"). Inside the BIN it says `H-M-7033-251203`, the app ID is `UIN01` which matches my `CAP0UIN01`, and the display is an `HSD080IFW1` — 8-inch, 1024×600, LVDS.
 
+Here's what changes and what doesn't:
+
+| | Before | After |
+|---|---|---|
+| APP Ver | `CAP0UIN01_2025/03/11 22:30:03` | `UIN01`, build 02.12.2025 |
+| MCU Ver | `LS_2025/02/17 22:03` | unchanged — the MCU isn't part of the package |
+| User Ver | `H-M-7033-86-250312` | `H-M-7033-251203` |
+
 One open question: the new package is missing the `-86-` segment that the old one had. The download page was originally the "-86-" page and was updated in place with this package, so it's very likely the direct successor. The updater itself doesn't check the variant. If you want absolute certainty, email hqdservice@gmail.com before flashing.
 
 Changelog per the manufacturer: fixes after phone system updates (iOS 26), improved wireless CarPlay and Android Auto, separate volume controls for music, navigation and main volume, and the option to disable automatic phone connection on startup.
+
+One thing I noticed: the online/video features that some builds advertise never appeared on my unit after the update — likely generic code that doesn't run on this infotainment system at all.
 
 ## What I changed in the image
 
@@ -34,13 +53,19 @@ Other than the firmware version itself, I only changed two things:
 
 ### The boot logo
 
-The SEAT badge (1999–2012) with a chrome separator and the FR logo on black. It's a 44,137-byte JPEG with the same structure as the original logo, stored as `0.bin` in the JFFS2 user partition.
+The SEAT badge (1999–2012) with a chrome separator and the FR logo on black. It's a 44,137-byte JPEG with the same structure as the original logo.
 
 ![Boot logo: SEAT badge (1999–2012) with chrome separator and FR logo on black](/images/f2-bootlogo.jpg)
 
+I picked the 1999–2012 badge because that's the logo the Ibiza 6J (2008–2012) carries — the newer SEAT logo only came with the Leon III in 2012. The SEAT part started as the 1999 SVG from Wikimedia Commons, split into emblem and wordmark; the FR badge came from my own image with the white background removed. The result is rendered at 1024×600 on black and encoded with `cjpeg -quality 93 -sample 2x2` (libjpeg-turbo), using baseline JPEG with the standard Huffman tables.
+
+Worth knowing: the stock firmware logo is already the SEAT 1999–2012 badge with the wordmark, not a VW logo. So the custom part is really the FR badge and the chrome separator.
+
+The radio stores the logo as `0.bin` in a JFFS2 user partition. Every firmware update rewrites that partition, so a logo flashed on its own is gone after the next update. That's why I baked it into the image rather than flashing `logo.bin` afterwards.
+
 The SEAT name, the SEAT logo and the FR badge are trademarks of **SEAT, S.A.** I made this logo variant for my own car and show it here only to document the mod. I'm not offering it for download, I'm not selling anything with it, and I don't claim any rights to the SEAT or FR marks. If you want to use these logos yourself, check with SEAT, S.A. or a lawyer first. Trademark law differs by country and use case, and this isn't legal advice.
 
-You can also change the logo on its own, without a full firmware update (see Step 3). The F2 image is the same file that goes on the stick as `logo.bin`.
+You can still change the logo on its own, without a full firmware update (see Step 3). The F2 image is the same file that goes on the stick as `logo.bin`.
 
 ### The 210 German strings
 
@@ -81,6 +106,8 @@ Independent spot checks:
 - You can always go back to the original image with the rescue stick.
 
 ## Step 1 — Prepare the USB stick (on the Mac)
+
+The manufacturer ships the firmware as a RAR archive. It uses RAR5, which 7-Zip (`7zz`) can't extract; on macOS, `bsdtar -xf archive.rar` works.
 
 Grab a 4–32 GB stick. **Everything on it will be erased.**
 
